@@ -50,7 +50,7 @@ public class TodoItemController {
     @DeleteMapping("/delete/hard/{id}")
     public ResponseSuccess<Object> deleteHard(@PathVariable Long id)
             throws NotFoundException
-    {
+    git {
         itemService.deleteHard(id);
         return new ResponseSuccess<>("success");
     }
