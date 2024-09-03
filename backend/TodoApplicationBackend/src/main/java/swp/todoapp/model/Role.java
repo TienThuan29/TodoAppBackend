@@ -1,10 +1,7 @@
 package swp.todoapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Arrays;
@@ -15,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "roles")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -43,18 +41,11 @@ public class Role {
     }
 
     private Set<Permission> initPermission() {
-        Set<Permission> setPermission = new HashSet<>();
-        switch (this.code) {
-            case "USER":
-                setPermission.addAll(Arrays.asList(
-                        Permission.USER_READ,
-                        Permission.USER_DELETE,
-                        Permission.USER_CREATE,
-                        Permission.USER_UPDATE
-                ));
-                break;
-        }
-        return setPermission;
+        return new HashSet<>(Arrays.asList(
+                Permission.USER_READ,
+                Permission.USER_DELETE,
+                Permission.USER_CREATE,
+                Permission.USER_UPDATE));
     }
 
 }

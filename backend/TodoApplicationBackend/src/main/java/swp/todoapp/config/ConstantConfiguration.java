@@ -27,12 +27,15 @@ public class ConstantConfiguration {
     public final String UI_METHOD_POST;
     public final String UI_METHOD_PUT;
     public final String UI_METHOD_DELETE;
+    public final String UI_LOGIN_PAGE;
+    public final String UI_DEFAULT_LOGIN_SUCCESS;
 
     // Cors properties
     public final String CORS_ALLOWED_HEADER;
     public final Long CORS_MAX_AGE;
     public final String CORS_PATTERN;
     public final String API_ALL_AUTHEN;
+    public final String LOGOUT_HANDLER_URL;
 
     public ConstantConfiguration(
         @Value("${jwt.expiration}") Long jwt_token_expiration,
@@ -52,7 +55,10 @@ public class ConstantConfiguration {
         @Value("${url.cors.age}") Long max_age,
         @Value("${url.cors.pattern}") String cors_pattern,
         @Value("${url.ui}") String url_ui,
-        @Value("${api.url.all.auth}") String api_url_all_auth
+        @Value("${api.url.all.auth}") String api_url_all_auth,
+        @Value("${api.url.logout}") String api_url_logout,
+        @Value("${url.ui.login-page}") String ui_login_page,
+        @Value("${url.ui.oauth2.default-success-login}") String ui_default_page_after_login_success
     ) {
         this.JWT_TOKEN_EXPIRATION = jwt_token_expiration;
         this.REFRESH_TOKEN_EXPIRATION = refresh_token_expiration;
@@ -72,6 +78,9 @@ public class ConstantConfiguration {
         this.CORS_PATTERN = cors_pattern;
         this.URL_UI = url_ui;
         this.API_ALL_AUTHEN = api_url_all_auth;
+        this.LOGOUT_HANDLER_URL = api_url_logout;
+        this.UI_LOGIN_PAGE = ui_login_page;
+        this.UI_DEFAULT_LOGIN_SUCCESS = ui_default_page_after_login_success;
     }
 
 }
