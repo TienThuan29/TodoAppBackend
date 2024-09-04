@@ -39,7 +39,7 @@ public class TodoItemController {
         return new ResponseSuccess<>("success");
     }
 
-    @DeleteMapping("/logic/{id}")
+    @PutMapping("/delete/logic/{id}")
     public ResponseSuccess<Object> deleteLogic(@PathVariable Long id)
             throws NotFoundException
     {
@@ -50,17 +50,17 @@ public class TodoItemController {
     @DeleteMapping("/delete/hard/{id}")
     public ResponseSuccess<Object> deleteHard(@PathVariable Long id)
             throws NotFoundException
-    git {
+    {
         itemService.deleteHard(id);
         return new ResponseSuccess<>("success");
     }
 
-    @DeleteMapping("/get-all")
+    @GetMapping("/get-all")
     public ResponseSuccess<List<TodoItemDTO>> getAll(@RequestParam(name = "deleted") String isDeleted){
         List<TodoItemDTO> list= itemService.getAll(isDeleted);
         if(list.isEmpty()){
             return new ResponseSuccess<>("nothing");
         }
-        return new ResponseSuccess<>("success", null);
+        return new ResponseSuccess<>("success", list);
     }
 }

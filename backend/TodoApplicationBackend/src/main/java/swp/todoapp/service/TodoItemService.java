@@ -20,23 +20,25 @@ public class TodoItemService {
     private TodoItemRepository todoItemRepository;
 
     public TodoItemDTO saveItem(TodoItemDTO todoItemDTO){
-        java.util.Date date = java.sql.Date.valueOf(java.time.LocalDate.now());
+        Date date = java.sql.Date.valueOf(java.time.LocalDate.now());
         todoItemDTO.setCreatedDate(date);
         return TodoItemMapper.toItemDTO(
-            todoItemRepository.save(TodoItemMapper.toItem(todoItemDTO))
+                todoItemRepository.save(TodoItemMapper.toItem(todoItemDTO))
         );
     }
 
-    public TodoItemDTO updateItem(Long id,TodoItemDTO updateItem)throws NotFoundException{
+    public TodoItemDTO updateItem(Long id,TodoItemDTO updateItem)throws NotFoundException {
         Optional<TodoItem> itemOptional= todoItemRepository.findById(id);
         if(!itemOptional.isPresent()){
             throw new NotFoundException("Item not found to update");
         }
         TodoItem item= itemOptional.get();
+
         item.setName(updateItem.getName());
         item.setCreatedDate(updateItem.getCreatedDate());
         item.setEndDate(updateItem.getEndDate());
         item.setDescription(updateItem.getDescription());
+
         todoItemRepository.save(item);
         return updateItem;
     }
