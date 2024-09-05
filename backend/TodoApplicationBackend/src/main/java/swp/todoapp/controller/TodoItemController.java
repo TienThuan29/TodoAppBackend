@@ -1,12 +1,16 @@
 package swp.todoapp.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swp.todoapp.dto.info.TodoItemDTO;
 import swp.todoapp.dto.respone.ResponseSuccess;
 import swp.todoapp.exception.def.NotFoundException;
 import swp.todoapp.service.TodoItemService;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -17,16 +21,21 @@ public class TodoItemController {
     private TodoItemService itemService;
 
     @PostMapping("/create")
-    public ResponseSuccess<Object> createItem(@RequestBody TodoItemDTO itemDTO){
-        itemService.saveItem(itemDTO);
+    public ResponseSuccess<Object> createItem(
+            @RequestBody TodoItemDTO itemDTO,
+            HttpServletRequest request,
+            HttpServletResponse response
+            )
+            throws ParseException {
+        itemService.saveItem(itemDTO.getName(), itemDTO.getEndDate(), itemDTO.getDescription()
+                , request, response);
         return new ResponseSuccess<>("success");
     }
 
     @PutMapping("/update/{id}")
     public ResponseSuccess<Object> updateItem
             (@PathVariable Long id, @RequestBody TodoItemDTO itemDTO)
-            throws NotFoundException
-    {
+            throws NotFoundException, ParseException {
         itemService.updateItem(id,itemDTO);
         return new ResponseSuccess<>("success");
     }
@@ -56,11 +65,9 @@ public class TodoItemController {
     }
 
     @GetMapping("/get-all")
-    public ResponseSuccess<List<TodoItemDTO>> getAll(@RequestParam(name = "deleted") String isDeleted){
+    public ResponseEntity<List<TodoItemDTO>> getAll(@RequestParam(name = "deleted") String isDeleted){
         List<TodoItemDTO> list= itemService.getAll(isDeleted);
-        if(list.isEmpty()){
-            return new ResponseSuccess<>("nothing");
-        }
-        return new ResponseSuccess<>("success", list);
+
+        return ResponseEntity.ok(list);
     }
 }

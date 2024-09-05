@@ -1,10 +1,7 @@
 package swp.todoapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,6 +11,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class TodoItem {
 
     @Id
@@ -28,6 +26,8 @@ public class TodoItem {
 
     @Column(name = "end_date")
     private Date endDate;
+
+
 
     @Column(name = "description", columnDefinition = "nvarchar(1024)")
     private String description;

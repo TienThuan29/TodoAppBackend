@@ -19,10 +19,10 @@ public class TodoItemDTO {
     private String name;
 
     @JsonProperty("createDate")
-    private Date createdDate;
+    private String createdDate;
 
     @JsonProperty("endDate")
-    private Date endDate;
+    private String endDate;
 
     @JsonProperty("description")
     private String description;
